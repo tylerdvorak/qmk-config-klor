@@ -15,18 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "klor.h"
-
+// OLED Rotation enum values are flags
+typedef enum {
+    OLED_ROTATION_0   = 0,
+    OLED_ROTATION_90  = 1,
+    OLED_ROTATION_180 = 2,
+    OLED_ROTATION_270 = 3, // OLED_ROTATION_90 | OLED_ROTATION_180
+} oled_rotation_t;
 
 oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
     return OLED_ROTATION_180;
 }
-
-
-//#ifdef HAPTIC_ENABLE
-//#include "drivers/haptic/DRV2605L.h"
-//#endif //HAPTIC ENABLE
-
 
 #ifdef SWAP_HANDS_ENABLE
 
@@ -95,6 +94,7 @@ const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] =
 //      └────────────────┘        └────────────────┘
 
 
+/*
 // POLYDACTYL / YUBITSUME 
 // use this matrix if you use the polydactyl or yubitsume layout ────────────────────────────────────┐
 
@@ -134,6 +134,7 @@ led_config_t g_led_config = { {
     4, 4, 4, 4, 4, 1, 1
 } };
 // ────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/
 
 
 /*
@@ -179,7 +180,6 @@ led_config_t g_led_config = { {
 // ────────────────────────────────────────────────────────────────────────────────────────────────────┘
 */
 
-/*
 // SAEGEWERK
 // use this matrix if you use the saegewerk layout ────────────────────────────────────────────────────┐
 
@@ -220,18 +220,14 @@ led_config_t g_led_config = { {
 } };
 
 // ────────────────────────────────────────────────────────────────────────────────────────────────────┘
-*/
 
 void suspend_power_down_kb(void) {
     rgb_matrix_set_suspend_state(true);
-    suspend_power_down_user();
+    suspend_power_down_kb();
 }
 
 void suspend_wakeup_init_kb(void) {
     rgb_matrix_set_suspend_state(false);
-    suspend_wakeup_init_user();
+    suspend_wakeup_init_kb();
 }
 #endif //RGB_MATRIX_ENABLE
-
-
-
